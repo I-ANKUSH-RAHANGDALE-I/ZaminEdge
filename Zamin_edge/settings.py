@@ -30,7 +30,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app', '.now.sh']
 
 
 # Application definition
@@ -139,6 +139,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICfILES_DIRS = os.path.join(BASE_DIR,"static"),
+STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles_build','static')
+
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
@@ -172,5 +175,5 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR , "static",
-
 ]
+
