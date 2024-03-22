@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %} Confirm Delete {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete the property:</p>
+    <ul>
+        <li><strong>Address:</strong> {{ property.address }}</li>
+        <li><strong>Price:</strong> {{ property.price }}</li>
+        <li><strong>Description:</strong> {{ property.description }}</li>
+        <li><strong>Bedrooms:</strong> {{ property.bedrooms }}</li>
+        <li><strong>Bathrooms:</strong> {{ property.bathrooms }}</li>
+        <li><strong>Amenities:</strong> {{ property.amenities }}</li>
+        <li><strong>Location:</strong> {{ property.location }}</li>
+    </ul>
+    <form action="{% url 'delete_property' property.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'property_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

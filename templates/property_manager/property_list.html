@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} PROPERTY LIST {% endblock title %}
+
+{% block content %}
+
+<div class="container" style="background-color: pink;">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>ADDRESS</th>
+                <th>PRICE</th>
+                <th>DESCRIPTION</th>
+                <th>BEDROOMS</th>
+                <th>BATHROOMS</th>
+                <th>AMENITIES</th>
+                <th>LOCATION</th>
+                <th>PHOTOS</th>
+                <th>VIDEO</th>
+                <th>UPDATE</th>
+                <th>DELETE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for property in properties %}
+
+                <td>{{ property.address }}</td>
+                <td>{{ property.price }}</td>
+                <td>{{ property.description }}</td>
+                <td>{{ property.bedrooms }}</td>
+                <td>{{ property.bathrooms }}</td>
+                <td>{{ property.amenities }}</td>
+                <td>{{ property.location }}</td>
+                    <!-- Display photos if available -->
+                    {% if property.photos.all %}
+                    <ul>
+                        {% for photo in property.photos.all %}
+                        <li><img src="{{ photo.image.url }}" alt="Property Photo" width="100" height="100"></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+                <td>
+                    <!-- Display videos if available -->
+                    {% if property.videos.all %}
+                    <ul>
+                        {% for video in property.videos.all %}
+                        <li><a href="{{ video.video_url }}">{{ video.video_url }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'update_property' property.id %}">
+                        <button type="button" class="btn btn-warning">Update</button>
+                    </a>
+                </td>
+                <td>
+                    <form action="{% url 'delete_property' property.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" button type="button" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this property?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
